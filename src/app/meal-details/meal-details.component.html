@@ -1,0 +1,14 @@
+<div class="container">
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Calories </th>
+      <th>Description</th>
+    </tr>
+    <tr *ngFor='let chakula of meal'>
+      <td>{{ chakula.name}}</td>
+      <td>{{ chakula.calories}}</td>
+      <td>{{ chakula.descrption}}</td>
+    </tr>
+  </table>
+</div>
