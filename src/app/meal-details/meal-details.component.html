@@ -1,27 +1,86 @@
-<div class="container">
-  <div class="header">
-    <h1>Meal Tracker</h1>
-    <p>A program to track your calories intake</p>
+<div class="row mt-5">
+  <div class="col-md-6 m-auto">
+    <div class="card card-body">
+      <h1 class="text-center mb-3"><i class="fas fa-sign-in-alt"></i> FOOD TRACKER</h1>
+      <form>
+        <div class="form-group">
+          <label for="email">Name</label>
+          <input type="text" id="name" #newName name="name" class="form-control" placeholder="Enter Food Name" />
+        </div>
+        <div class="form-group">
+          <label for="email">Calories</label>
+          <input type="text" id="calories" #newCalories name="calories" class="form-control"
+            placeholder="Enter amount of calories consumed" />
+        </div>
+        <div class="form-group">
+          <label for="email">Details</label>
+          <input type="details" id="details" #newDetails name="details" class="form-control"
+            placeholder="Enter details about food consumed" />
+        </div>
+        <button type="submit" (click)="addMeal(newName, newCalories, newDetails)"
+          class="btn btn-primary btn-block">TRACK</button>
+      </form>
+    </div>
   </div>
-  <hr>
-  <div class="row">
+</div>
+
+
+
+<div class="container">
+  <div class="row mt-5 justify-content-center">
     <div class="col-md-6">
-      <table class="full-size">
-        <tr>
-          <th>Name</th>
-          <th>Calories </th>
-          <th>Description</th>
-        </tr>
-        <tr *ngFor='let chakula of meal'>
-          <td>{{ chakula.name}}</td>
-          <td>{{ chakula.calories}}</td>
-          <td>{{ chakula.descrption}}</td>
-        </tr>
-      </table>
+      <button type="submit" (click)="toggle()" id="bt" class="btn btn-warning btn-block">
+        {{buttonName | uppercase}} MORE THAN 200 CALORIES </button>
     </div>
     <div class="col-md-6">
-      <app-meal-forms (addMeal)="addNewMeal($event)"></app-meal-forms>
+      <button type="submit" (click)="toggle1()" id="less" class="btn btn-warning btn-block">
+        {{buttonName | uppercase}} LESS THAN 200 CALORIES
+      </button>
     </div>
+
   </div>
 
 </div>
+<hr>
+<div class="container">
+  <div class="row mt-5 justify-content-center">
+    <div class="col-lg-12">
+      <ng-container *ngIf="show">
+        <h1>FOODS WITH CALORIES > 200</h1>
+        <app-meal-forms *ngFor="let meal of filter() ;let i = index " (isComplete)='completeGoal($event,i)'
+          [meal]='meal'></app-meal-forms>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row mt-5 justify-content-center">
+    <div class="col-lg-12">
+      <ng-container *ngIf="show1">
+        <h1>FOODS WITH CALORIES < 200</h1> <app-meal-forms *ngFor="let meal of filterLess() ;let i = index "
+            (isComplete)='completeGoal($event,i)' [meal]='meal'>
+            </app-meal-forms>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<hr>
+<div class="container">
+  <div class="row  mb-5 justify-content-center">
+    <div class="col-md-6 m-auto">
+      <h1>ALL MEALS LIST</h1>
+    </div>
+  </div>
+</div>
+<app-meal-forms *ngFor="let meal of foodTracker ;let i = index " (isComplete)='completeGoal($event,i)'
+  (isedit)='edit($event, i)' [foodTracker]='meal'>
+</app-meal-forms>
+
+<!-- <app-meal *ngFor="let meal of foodTracker | filter " [foodTracker]='meal'></app-meal> -->
+<!-- <app-meal *ngFor="let meal of filter() " [foodTracker]='meal'></app-meal> -->
+
+
+
+<router-outlet></router-outlet>
