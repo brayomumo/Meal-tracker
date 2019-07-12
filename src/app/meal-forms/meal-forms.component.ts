@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { Meals } from '../meals';
 
 @Component({
@@ -7,17 +7,38 @@ import { Meals } from '../meals';
   styleUrls: ['./meal-forms.component.css']
 })
 export class MealFormsComponent implements OnInit {
-  newMeal = new Meals('', 0, '');
+  @Input() foodTracker: Meals;
+  ft: Meals[];
+  @Output() isComplete = new EventEmitter<boolean>();
+  @Output() isedit = new EventEmitter<Meals>();
 
-  @Output() addMeal = new EventEmitter<Meals>();
+  name: string;
+  calories: number;
+  details: string;
+  arr: [];
+  getMeal = new Meals(this.name, this.calories, this.details);
 
-  submitMeal() {
-    this.addMeal.emit(this.newMeal);
-    alert('Appending done successfuly');
+  goalDelete(complete: boolean) {
+    this.isComplete.emit(complete);
   }
-  constructor() { }
-
-  ngOnInit() {
+  edit(name: string, calories: number, details: string) {
+    this.isedit.emit(this.getMeal);
   }
 
+  // edit(name, calories, details) {
+  //   // var edit = this.ft.map(meal => {
+  //   //   meal.name;
+  //   // });
+
+  //   console.log(
+  //     this.foodTracker.name,
+  //     this.foodTracker.calories,
+  //     this.foodTracker.details
+  //   );
+  // }
+  constructor() {
+    // this.foodTracker = new FoodTracker("chipo", 500, "i only had a handful");
+  }
+
+  ngOnInit() {}
 }
